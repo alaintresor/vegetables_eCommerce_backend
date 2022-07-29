@@ -96,4 +96,10 @@ class userController extends Controller
             return Response()->json(['message' => 'Old password is incorrect'], 404);
         }
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return Response()->json(['message' => 'Successfully logged out'], 200);
+    }
 }
