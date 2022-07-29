@@ -14,12 +14,22 @@ class userController extends Controller
     {
         //
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'gender' => 'required|string|max:6',
+            'age' => 'required',
+            'address' => 'required',
+            'contact' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required',
         ]);
         $user = User::create([
-            'name' => $request->name,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'address' => $request->address,
+            'contact' => $request->contact,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
@@ -50,6 +60,40 @@ class userController extends Controller
             return Response()->json($res, 200);
         } else {
             return Response()->json(['message' => 'Password is incorrect'], 404);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        //
+        $this->validate($request, [
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'gender' => 'required|string|max:6',
+            'age' => 'required',
+            'address' => 'required',
+            'contact' => 'required',
+        ]);
+        $user = User::findOrFail(auth()->user()->id);
+        $user->update($request->all());
+        return Response()->json($user, 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        //
+        $this->validate($request, [
+            'old_password' => 'required',
+            'new_password' => 'required|string|min:6',
+            'password_confirmation'  => 'required|same:new_password',
+        ]);
+        $user = User::findOrFail(auth()->user()->id);
+        if (Hash::check($request->old_password, $user->password)) {
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            return Response()->json(['message' => 'Password changed successfully'], 200);
+        } else {
+            return Response()->json(['message' => 'Old password is incorrect'], 404);
         }
     }
 }

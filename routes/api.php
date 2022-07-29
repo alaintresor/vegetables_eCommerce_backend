@@ -19,11 +19,15 @@ Route::prefix('v1')->group(function () {
     Route::get('/', function () {
         return response()->json(['message' => 'Welcome to API']);
     });
-
-    // public route for registering a new user
-    Route::post('/register', [userController::class, 'register']);
-    // public route for logging in a user
-    Route::post('/login', [userController::class, 'login']);
+    //------------------- User route ------------------------------------------
+    Route::prefix('user')->group(function () {
+        Route::post('/register', [userController::class, 'register']);
+        Route::post('/login', [userController::class, 'login']);
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::put('/update', [userController::class, 'update']);
+            Route::put('/change-password', [userController::class, 'changePassword']);
+        });
+    });
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
