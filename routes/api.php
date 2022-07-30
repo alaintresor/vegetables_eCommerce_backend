@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\userController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\blogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +30,35 @@ Route::prefix('v1')->group(function () {
             Route::put('/change-password', [userController::class, 'changePassword']);
         });
     });
+    // -------------Categories Route--------------------------------
+    Route::prefix('category')->group(function () {
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/', [CategoryController::class, 'index']);
+            Route::post('/add', [CategoryController::class, 'store']);
+            Route::get('/{id}', [categoryController::class, 'show']);
+            Route::put('/{id}', [CategoryController::class, 'update']);
+            Route::delete('/{id}', [CategoryController::class, 'destroy']);
+            Route::get('search/{search}', [CategoryController::class, 'search']);
+       
+        });
+
+ 
+    });
+
+    // -------------Blog Route--------------------------------
+    Route::prefix('Blog')->group(function () {
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/', [blogController::class, 'getAllBlog']);
+            Route::post('/add', [blogController::class, 'addBlog']);
+            Route::put('/edit/{id}', [blogController::class, 'update']);
+            Route::delete('/{id}', [blogController::class, 'destroy']);
+            Route::get('search/{search}', [blogController::class, 'search']);
+            Route::get('/{id}', [blogController::class, 'show']);
+
+
+        });
+    });
+    
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
