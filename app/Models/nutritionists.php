@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stock extends Model
+class nutritionists extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'product_id',
-        'quantity',
-        'note'
+        'firstname',
+        'lastname',
+        'email',
+        'telephone',
+        'address'
     ];
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
 }
