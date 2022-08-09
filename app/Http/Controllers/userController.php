@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,6 +30,7 @@ class userController extends Controller
             'address' => $request->address,
             'contact' => $request->contact,
             'email' => $request->email,
+            'role' => 'customer',
             'password' => bcrypt($request->password),
         ]);
         $token = $user->createToken('authToken')->plainTextToken;

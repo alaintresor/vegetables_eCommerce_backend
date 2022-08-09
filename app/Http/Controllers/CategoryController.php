@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categories;
+use Exception;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -10,7 +11,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        
+
         // try{
         //     $category = Categories::orderBy('id', 'desc')->with('blogs')->get();
         //     if($category){
@@ -25,7 +26,7 @@ class CategoryController extends Controller
         //         'message' => 'false',
         //         'error' => $e.getMessage(),
         //     ]);
-        
+
 
         // }
 
@@ -39,16 +40,16 @@ class CategoryController extends Controller
     {
         //
         $this->validate($request, [
-            
+
             'name' => 'required|string|max:255',
-            
+
         ]);
         $category = Categories::create([
             'name' => $request->name,
-            
+
         ]);
         $res = [
-         
+
             'data' => $category
         ];
         return Response()->json($res, 200);
@@ -61,18 +62,17 @@ class CategoryController extends Controller
             $request,
             [
                 'name' => 'required|string|max:255',
-            
+
             ]
         );
         $category = Categories::findOrFail($id);
-       
+
         $category->name = $request->name;
         $category->save();
         return response()->json([
             'message' => 'Category updated successfully',
             'data' => $category
         ], 200);
-        
     }
 
     public function destroy($id)
@@ -90,47 +90,37 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        try{
+        try {
             $one = Categories::findOrFail($id);
-            if($one){
+            if ($one) {
                 return response()->json([
                     'message' => 'success',
                     'category' => $one
                 ], 200);
-
             }
-            
-            
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return response()->json([
                 'message' => 'false',
-                'error' => $e.getMessage(),
+                'error' => $e->getMessage(),
             ]);
-
         }
-        
     }
 
-    public function search($search){
+    public function search($search)
+    {
         try {
             $category = Categories::where('name', 'LIKE', '%' . $search . '%')->orderBy('id', 'desc')->get();
-            if($category){
+            if ($category) {
                 return response()->json([
                     'success' => 'true',
                     'data' => $category
                 ]);
             }
-
-        }
-        catch (Exception $e) 
-        {
+        } catch (Exception $e) {
             return response()->json([
                 'success' => 'false',
                 'data' => $e->getMessage(),
             ]);
-
         }
     }
-   
 }

@@ -21,6 +21,7 @@ class AuthController extends Controller
         $admin = Admin::create([
             'username' => $request->username,
             'email' => $request->email,
+            'role' => 'admin',
             'password' => bcrypt($request->password),
         ]);
         $token = $admin->createToken('authToken')->plainTextToken;
@@ -55,7 +56,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         # code...
-        $request->admin()->token()->revoke();
+        $request->user()->token()->revoke();
         return Response()->json(['message' => 'Successfully logged out'], 200);
     }
 }
