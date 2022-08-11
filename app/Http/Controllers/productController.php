@@ -18,7 +18,7 @@ class productController extends Controller
     public function index()
     {
         //
-        $products = Product::all();
+        $products = Product::orderBy('id', 'desc')->with('product_categories')->get();
         if ($products) {
             return response()->json([
                 'message' => 'true',
@@ -30,6 +30,7 @@ class productController extends Controller
                 'error' => 'No Products Found'
             ], 404);
         }
+        $products = Product::orderBy('id', 'asc')->get();
     }
 
     /**
