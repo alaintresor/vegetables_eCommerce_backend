@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('link');
             $table->string('requirements');
-            $table->foreignId('category_id')->constant('categories')->onDelete('restrict');
+            $table->foreignId('category_id')->constant('categories')->onDelete('cascade');
             $table->timestamps();
 
             $table->index('category_id');

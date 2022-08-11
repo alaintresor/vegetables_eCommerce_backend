@@ -15,7 +15,7 @@ class blogController extends Controller
          
           if($blog){
             return response()->json([
-                'message' => 'true',
+                'message' => 'All blogs Retrieved Succesfully',
                 'data' => $blog
             ], 200);
           }
@@ -30,9 +30,11 @@ class blogController extends Controller
         
         
         //
-        $blog = Blog::all();
+        $blog = Blog::orderBy('id', 'desc')->get();
         
     }
+
+    
 
     public function addBlog(Request $request)
     {
@@ -143,5 +145,9 @@ class blogController extends Controller
         }
         
     }
+
+   
+
+
 
 }

@@ -125,7 +125,23 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', [stockController::class, 'destroy']);
         });
     });
+
+        // -------------Nutritionists Route--------------------------------
+        Route::prefix('Nutritionists')->group(function () {
+        Route::middleware('auth:sanctum')->group(function () {{
+    
+            Route::get('/', [nutritionistsController::class, 'getall']);
+            Route::post('/Order', [NutritionistsController::class, 'store']);
+            Route::get('/{id}', [NutritionistsController::class, 'show']);
+            Route::put('update/{id}', [NutritionistsController::class, 'update']);
+            Route::delete('delete/{id}', [NutritionistsController::class, 'destroy']);
+    
+    
+        }});
+   });
 });
+
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

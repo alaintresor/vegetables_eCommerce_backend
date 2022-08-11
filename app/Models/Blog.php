@@ -16,6 +16,7 @@ class Blog extends Model
         'requirements',
         'link',
         
+        
     ];
 
     
