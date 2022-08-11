@@ -11,31 +11,31 @@ class CategoryController extends Controller
 
     public function index()
     {
+        
+        try{
+          $data = Categories::orderBy('id', 'desc')->with('blogs')->get();
+         
+          if($data){
+            return response()->json([
+                'message' => 'All categories With Blogs Retrieved successfully',
+                'data' => $data
+            ], 200);
+          }
+        }
+        catch(Exception $e){
+            return response()->json([
+                'message' => 'false',
+                'error' => $e.getMessage(),
+            ]);
 
-        // try{
-        //     $category = Categories::orderBy('id', 'desc')->with('blogs')->get();
-        //     if($category){
-        //         return response()->json([
-        //             'message' => 'true',
-        //             'category' => $category
-        //         ], 200);
-        //     }
-        // }
-        // catch(Exception $e){
-        //     return response()->json([
-        //         'message' => 'false',
-        //         'error' => $e.getMessage(),
-        //     ]);
-
-
-        // }
-
-        $category = Categories::all();
-        return response()->json([
-            'message' => 'All Categories Retrieved Succesfully',
-            'category' => $category
-        ], 200);
+        }
+        
+        
+        //
+        $data = Categories::all();
+        
     }
+
     public function store(Request $request)
     {
         //
@@ -69,6 +69,7 @@ class CategoryController extends Controller
 
         $category->name = $request->name;
         $category->save();
+        
         return response()->json([
             'message' => 'Category updated successfully',
             'data' => $category
