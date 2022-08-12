@@ -135,7 +135,7 @@ Route::prefix('v1')->group(function () {
         });
     });
         // -------------Blog Subcategory Route--------------------------------
-        Route::prefix('/Blogsubcategory')->group(function () {
+        Route::prefix('/blogsubcategory')->group(function () {
             // ------------------public routes----------------------
             Route::get('search/{search}', [blogController::class, 'search']);
             Route::get('/', [BlogSubCategoryController::class, 'index']);
