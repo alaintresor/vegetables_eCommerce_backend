@@ -48,7 +48,7 @@ Route::prefix('v1')->group(function () {
         });
     });
     // -------------Categories Route--------------------------------
-    Route::prefix('category')->group(function () {
+    Route::prefix('/category')->group(function () {
         //------------------public routes----------------------
         Route::get('/', [CategoryController::class, 'index']);
         Route::get('search/{search}', [CategoryController::class, 'search']);
@@ -64,7 +64,7 @@ Route::prefix('v1')->group(function () {
     });
 
     // -------------Blog Route--------------------------------
-    Route::prefix('Blog')->group(function () {
+    Route::prefix('/Blog')->group(function () {
         //------------------public routes----------------------
         Route::get('/', [blogController::class, 'getAllBlog']);
         Route::get('search/{search}', [blogController::class, 'search']);
@@ -135,7 +135,7 @@ Route::prefix('v1')->group(function () {
         });
     });
         // -------------Blog Subcategory Route--------------------------------
-        Route::prefix('Blogsubcategory')->group(function () {
+        Route::prefix('/Blogsubcategory')->group(function () {
             // ------------------public routes----------------------
             Route::get('search/{search}', [blogController::class, 'search']);
             Route::get('/', [BlogSubCategoryController::class, 'index']);
@@ -152,7 +152,7 @@ Route::prefix('v1')->group(function () {
         });
 
         // -------------Nutritionists Route--------------------------------
-        Route::prefix('Nutritionists')->group(function () {
+        Route::prefix('/Nutritionists')->group(function () {
              // ------------------public routes----------------------
              Route::post('/Order', [NutritionistsController::class, 'store']);
              // ------------------protected routes----------------------
