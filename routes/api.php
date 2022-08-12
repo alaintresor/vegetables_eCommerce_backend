@@ -8,6 +8,7 @@ use App\Http\Controllers\productcategoryController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\stockController;
 use App\Http\Controllers\subcategoryController;
+use App\Http\Controllers\BlogSubCategoryController;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,26 +48,34 @@ Route::prefix('v1')->group(function () {
         });
     });
     // -------------Categories Route--------------------------------
-    Route::prefix('category')->group(function () {
+    Route::prefix('/category')->group(function () {
+        //------------------public routes----------------------
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::get('search/{search}', [CategoryController::class, 'search']);
+        Route::get('/{id}', [categoryController::class, 'show']);
+        // -------------private Route--------------------------------
         Route::middleware('auth:sanctum')->group(function () {
-            Route::get('/', [CategoryController::class, 'index']);
+            
             Route::post('/add', [CategoryController::class, 'store']);
-            Route::get('/{id}', [categoryController::class, 'show']);
             Route::put('/{id}', [CategoryController::class, 'update']);
             Route::delete('/{id}', [CategoryController::class, 'destroy']);
-            Route::get('search/{search}', [CategoryController::class, 'search']);
+            
         });
     });
 
     // -------------Blog Route--------------------------------
-    Route::prefix('Blog')->group(function () {
+    Route::prefix('/Blog')->group(function () {
+        //------------------public routes----------------------
+        Route::get('/', [blogController::class, 'getAllBlog']);
+        Route::get('search/{search}', [blogController::class, 'search']);
+        Route::get('/{id}', [blogController::class, 'show']);
+         // -------------private Route--------------------------------
         Route::middleware('auth:sanctum')->group(function () {
-            Route::get('/', [blogController::class, 'getAllBlog']);
+            
             Route::post('/add', [blogController::class, 'addBlog']);
             Route::put('/edit/{id}', [blogController::class, 'update']);
             Route::delete('/{id}', [blogController::class, 'destroy']);
-            Route::get('search/{search}', [blogController::class, 'search']);
-            Route::get('/{id}', [blogController::class, 'show']);
+            
         });
     });
 
@@ -125,13 +134,30 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', [stockController::class, 'destroy']);
         });
     });
+        // -------------Blog Subcategory Route--------------------------------
+        Route::prefix('/Blogsubcategory')->group(function () {
+            // ------------------public routes----------------------
+            Route::get('search/{search}', [blogController::class, 'search']);
+            Route::get('/', [BlogSubCategoryController::class, 'index']);
+            Route::get('/{id}', [BlogSubCategoryController::class, 'show']);
+            // ------------------protected routes----------------------
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/add', [BlogSubCategoryController::class, 'store']);
+            Route::put('update/{id}', [BlogSubCategoryController::class, 'update']);
+            Route::delete('delete/{id}', [BlogSubCategoryController::class, 'destroy']);
+
+        });
+
+
+        });
 
         // -------------Nutritionists Route--------------------------------
-        Route::prefix('Nutritionists')->group(function () {
+        Route::prefix('/Nutritionists')->group(function () {
+             // ------------------public routes----------------------
+             Route::post('/Order', [NutritionistsController::class, 'store']);
+             // ------------------protected routes----------------------
         Route::middleware('auth:sanctum')->group(function () {{
-    
             Route::get('/', [nutritionistsController::class, 'getall']);
-            Route::post('/Order', [NutritionistsController::class, 'store']);
             Route::get('/{id}', [NutritionistsController::class, 'show']);
             Route::put('update/{id}', [NutritionistsController::class, 'update']);
             Route::delete('delete/{id}', [NutritionistsController::class, 'destroy']);
@@ -139,6 +165,7 @@ Route::prefix('v1')->group(function () {
     
         }});
    });
+   
 });
 
 
