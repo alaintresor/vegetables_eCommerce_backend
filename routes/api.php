@@ -8,7 +8,7 @@ use App\Http\Controllers\productcategoryController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\stockController;
 use App\Http\Controllers\subcategoryController;
-use App\Models\ProductCategory;
+use App\Http\Controllers\orderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -126,19 +126,28 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-        // -------------Nutritionists Route--------------------------------
-        Route::prefix('Nutritionists')->group(function () {
-        Route::middleware('auth:sanctum')->group(function () {{
-    
-            Route::get('/', [nutritionistsController::class, 'getall']);
-            Route::post('/Order', [NutritionistsController::class, 'store']);
-            Route::get('/{id}', [NutritionistsController::class, 'show']);
-            Route::put('update/{id}', [NutritionistsController::class, 'update']);
-            Route::delete('delete/{id}', [NutritionistsController::class, 'destroy']);
-    
-    
-        }});
-   });
+    // -------------Nutritionists Route--------------------------------
+    Route::prefix('Nutritionists')->group(function () {
+        Route::middleware('auth:sanctum')->group(function () { {
+
+                Route::get('/', [nutritionistsController::class, 'getall']);
+                Route::post('/Order', [NutritionistsController::class, 'store']);
+                Route::get('/{id}', [NutritionistsController::class, 'show']);
+                Route::put('update/{id}', [NutritionistsController::class, 'update']);
+                Route::delete('delete/{id}', [NutritionistsController::class, 'destroy']);
+            }
+        });
+    });
+    // -------------Order Route--------------------------------
+    Route::prefix('/order')->group(function () {
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/', [orderController::class, 'index']);
+            Route::get('/{id}', [orderController::class, 'show']);
+            Route::post('/add', [orderController::class, 'store']);
+            Route::put('/{id}', [orderController::class, 'update']);
+            Route::delete('/{id}', [orderController::class, 'destroy']);
+        });
+    });
 });
 
 
