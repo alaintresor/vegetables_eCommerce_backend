@@ -18,7 +18,7 @@ class orderController extends Controller
     {
         //
         if (auth()->user()->role != 'admin') {
-            $orders = auth()->user()->orders;
+            $orders = Order::where('userId', auth()->user()->id)->get();
             $res = [
                 'orders' => $orders
             ];

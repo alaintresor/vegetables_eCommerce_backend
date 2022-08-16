@@ -31,6 +31,7 @@ class blogController extends Controller
         
         //
         $blog = Blog::orderBy('id', 'desc')->get();
+        $blog = Categories::orderBy('id', 'desc')->get();
         
     }
 
@@ -44,15 +45,18 @@ class blogController extends Controller
             'description' => 'required|string|max:255',
             'requirements' => 'required|string|max:255',
             'link' => 'required|string|max:255',
-            'category_id' => 'required'
+            'image' => 'required',
+            'sub_category_id' => 'required'
            
         ]);
+        $imagePath = $request->image->store('/uploads', 'public');
         $blog = Blog::create([
             'title' => $request->title,
             'description' => $request->description,
             'requirements' => $request->requirements,
             'link' => $request->link,
-            'category_id' => $request->category_id,
+            'image' => $imagePath,
+            'sub_category_id' => $request->sub_category_id,
             
         ]);
         
@@ -70,22 +74,37 @@ class blogController extends Controller
             'description' => 'required|string|max:255',
             'requirements' => 'required|string|max:255',
             'link' => 'required|string|max:255',
-            'category_id' => 'required'
+            'image' => 'required|string|max:255',
+            'sub_category_id' => 'required'
            
         ]);
+        $imagePath = $request->image->store('/uploads', 'public');
         $blog = Blog::findOrFail($id);
-       
-        $blog->title = $request->title;
-        $blog->description = $request->description;
-        $blog->requirements = $request->requirements;
-        $blog->link = $request->link;
-        $blog->category_id = $request->category_id;
-        $blog->save();
+        if($blog) {
+            $blog->title = $request->title;
+            $blog->description = $request->description;
+            $blog->requirements = $request->requirements;
+            $blog->link = $request->link;
+            if($imagePath) {
+                $blog->imagePath = $imagePath;
+            }
+            $blog->sub_category_id = $request->sub_category_id;
+            $blog->save();
+            $res = [
+                'message' => 'Blog Updated Successfully',
+                'data' => $blog
+            ];
+            return Response()->json($res, 200);
 
-        return response()->json([
-            'message' => 'blog updated successfully',
-            'data' => $blog
-        ], 200);
+        } else {
+            return response()->json([
+                'message' => 'false',
+                'error' => 'Blog Not Found'
+            ], 404);
+
+        }
+        
+
         
     }
 
