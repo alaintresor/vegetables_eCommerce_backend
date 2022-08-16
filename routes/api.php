@@ -7,6 +7,7 @@ use App\Http\Controllers\blogController;
 use App\Http\Controllers\productcategoryController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\stockController;
+use App\Http\Controllers\nutritionistsController;
 use App\Http\Controllers\subcategoryController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\BlogSubCategoryController;
@@ -170,7 +171,26 @@ Route::prefix('v1')->group(function () {
             Route::put('/{id}', [orderController::class, 'update']);
             Route::delete('/{id}', [orderController::class, 'destroy']);
         });
+<<<<<<< HEAD
     });
+=======
+
+        // -------------Nutritionists Route--------------------------------
+        Route::prefix('/Nutritionists')->group(function () {
+             // ------------------public routes----------------------
+             Route::post('/Order', [nutritionistsController::class, 'store']);
+             // ------------------protected routes----------------------
+        Route::middleware('auth:sanctum')->group(function () {{
+            Route::get('/', [nutritionistsController::class, 'getall']);
+            Route::get('/{id}', [nutritionistsController::class, 'show']);
+            Route::put('update/{id}', [nutritionistsController::class, 'update']);
+            Route::delete('delete/{id}', [nutritionistsController::class, 'destroy']);
+    
+    
+        }});
+   });
+   
+>>>>>>> checkout
 });
 
 

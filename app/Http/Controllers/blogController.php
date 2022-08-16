@@ -12,7 +12,7 @@ class blogController extends Controller
         
         try{
           $blog = Blog::orderBy('id', 'desc')->with('category')->get();
-         
+          
           if($blog){
             return response()->json([
                 'message' => 'All blogs Retrieved Succesfully',
