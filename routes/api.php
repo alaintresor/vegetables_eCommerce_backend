@@ -76,6 +76,7 @@ Route::prefix('v1')->group(function () {
 
             Route::post('/add', [blogController::class, 'addBlog']);
             Route::put('/edit/{id}', [blogController::class, 'update']);
+            Route::get('/BySubCategory/{id}', [blogController::class, 'getBlogBysubCategory']);
             Route::delete('/{id}', [blogController::class, 'destroy']);
         });
     });
