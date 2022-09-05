@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\BlogSubCategory;
 use Illuminate\Http\Request;
 
 class blogController extends Controller
@@ -11,12 +12,12 @@ class blogController extends Controller
     {
         
         try{
-          $blog = Blog::orderBy('id', 'desc')->with('category')->get();
-         
-          if($blog){
+          $blog = Blog::orderBy('id', 'desc')->with('blog_sub_categories')->get();
+          
+          if($sub){
             return response()->json([
                 'message' => 'All blogs Retrieved Succesfully',
-                'data' => $blog
+                'data' => $sub
             ], 200);
           }
         }
@@ -64,6 +65,24 @@ class blogController extends Controller
             'data' => $blog
         ];
         return Response()->json($res, 200);
+    }
+
+    public function getBlogBysubCategory($id) 
+    {
+        $subcategory = BlogSubCategory::find($id);
+        $blog = Blog::where('sub_category_id', $id)->get();
+        if  ($blog) {
+            return response()->json([
+                'message' => 'true',
+                'blogs' => $blog
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'false',
+                'error' => 'No blogs found'
+            ]);
+        }
+        
     }
 
     public function update(Request $request, $id)
