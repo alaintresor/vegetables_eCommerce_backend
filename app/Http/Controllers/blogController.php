@@ -133,7 +133,7 @@ class blogController extends Controller
         $blog = Blog::findOrFail($id);
         $blog->delete();
         return response()->json([
-            'message' => 'Blog deleted Successfully',
+            'message' => 'Blog has deleted Successfully',
             'data' => $blog
         ], 200);
     }
@@ -183,12 +183,5 @@ class blogController extends Controller
         }
         
     }
-
-
-    
-
-   
-
-
 
 }
