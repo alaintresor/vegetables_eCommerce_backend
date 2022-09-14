@@ -67,13 +67,14 @@ Route::prefix('v1')->group(function () {
     // -------------Blog Route--------------------------------
     Route::prefix('/Blog')->group(function () {
         //------------------public routes----------------------
-        Route::get('/', [blogController::class, 'getAllBlog']);
+        Route::get('/', [blogController::class, 'index']);
         Route::get('search/{search}', [blogController::class, 'search']);
         Route::get('/{id}', [blogController::class, 'show']);
+        Route::get('/subCategory/{id}', [blogController::class, 'getBlogBysubCategory']);
         // -------------private Route--------------------------------
         Route::middleware('auth:sanctum')->group(function () {
 
-            Route::post('/add', [blogController::class, 'addBlog']);
+            Route::post('/add', [blogController::class, 'store']);
             Route::put('/edit/{id}', [blogController::class, 'update']);
             Route::delete('/{id}', [blogController::class, 'destroy']);
         });
@@ -140,10 +141,12 @@ Route::prefix('v1')->group(function () {
         Route::get('search/{search}', [blogController::class, 'search']);
         Route::get('/', [BlogSubCategoryController::class, 'index']);
         Route::get('/{id}', [BlogSubCategoryController::class, 'show']);
+        
+        
         // ------------------protected routes----------------------
         Route::middleware('auth:sanctum')->group(function () {
             Route::post('/add', [BlogSubCategoryController::class, 'store']);
-            Route::put('update/{id}', [BlogSubCategoryController::class, 'update']);
+            Route::put('/update/{id}', [BlogSubCategoryController::class, 'update']);
             Route::delete('delete/{id}', [BlogSubCategoryController::class, 'destroy']);
         });
     });
