@@ -8,16 +8,16 @@ use Illuminate\Http\Request;
 
 class blogController extends Controller
 {
-    public function getAllBlog()
+    public function index()
     {
         
         try{
-          $blog = Blog::orderBy('id', 'desc')->with('blog_sub_categories')->get();
+          $blog = Blog::all();
           
-          if($sub){
+          if($blog){
             return response()->json([
                 'message' => 'All blogs Retrieved Succesfully',
-                'data' => $sub
+                'data' => $blog
             ], 200);
           }
         }
@@ -38,11 +38,11 @@ class blogController extends Controller
 
     
 
-    public function addBlog(Request $request)
+    public function store(Request $request)
     {
         //
         $this->validate($request, [
-            'title' => 'required|string|max:255|unique:blogs',
+            'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'requirements' => 'required|string|max:255',
             'link' => 'required|string|max:255',
@@ -133,7 +133,7 @@ class blogController extends Controller
         $blog = Blog::findOrFail($id);
         $blog->delete();
         return response()->json([
-            'message' => 'Blog deleted Successfully',
+            'message' => 'Blog has deleted Successfully',
             'data' => $blog
         ], 200);
     }
@@ -183,9 +183,5 @@ class blogController extends Controller
         }
         
     }
-
-   
-
-
 
 }
