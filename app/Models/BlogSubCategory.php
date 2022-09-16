@@ -19,4 +19,9 @@ class BlogSubCategory extends Model
     {
         return $this->belongsTo(Categories::class, 'category_id');
     }
+
+    public function blog()
+    {
+        return $this->hasMany(Blog::class, 'id');
+    }
 }

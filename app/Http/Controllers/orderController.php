@@ -13,8 +13,9 @@ class orderController extends Controller
     public function index()
     {
         //
+        error_log("here");
         if (auth()->user()->role != 'admin') {
-            $orders = auth()->user()->orders;
+            $orders = Order::where('userId',auth()->user()->id)->get();
             $res = [
                 'orders' => $orders
             ];
@@ -48,6 +49,7 @@ class orderController extends Controller
                     'error' => 'Not enough quantity in stock'
                 ], 404);
             }
+           
             $order = Order::create([
                 'userId' => auth()->user()->id,
                 'productId' => $request->productId,

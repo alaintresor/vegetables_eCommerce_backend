@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class BlogSubCategoryController extends Controller
 {
+    
     public function index()
     {
         try {
@@ -14,7 +15,7 @@ class BlogSubCategoryController extends Controller
 
             if($sub){
                 return response()->json([
-                    'message' => 'All Subcategories RetrievedSuccesfully',
+                    'message' => 'All  subcategories Retrieved Succesfully',
                     'data' => $sub
                 ], 200);
             }
@@ -26,8 +27,36 @@ class BlogSubCategoryController extends Controller
             ]);
 
         }
-        
+        $sub = BlogSubCategory::orderBy('id', 'asc')->get();
+        $sub = Blog::orderBy('id', 'desc')->get();
+         
     }
+
+    // public function getall()
+    // {
+    //     try {
+    //         $sub = BlogSubCategory::orderBy('id', 'desc')->with('blog')->get();
+
+    //         if($sub){
+    //             return response()->json([
+    //                 'message' => 'All  subcategories with blogs Retrieved Succesfully',
+    //                 'data' => $sub
+    //             ], 200);
+    //         }
+    //     }
+    //     catch(Exception $e){
+    //         return response()->json([
+    //             'message' => 'false',
+    //             'error' => $e.getMessage(),
+    //         ]);
+
+    //     }
+    //     $sub = BlogSubCategory::orderBy('id', 'asc')->get();
+    //     $sub = Blog::orderBy('id', 'desc')->get();
+         
+    // }
+
+
 
     public function store(Request $request)
     {
