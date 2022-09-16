@@ -13,7 +13,6 @@ class orderController extends Controller
     public function index()
     {
         //
-        error_log("here");
         if (auth()->user()->role != 'admin') {
             $orders = Order::where('userId',auth()->user()->id)->get();
             $res = [
@@ -21,6 +20,7 @@ class orderController extends Controller
             ];
             return response()->json($res, 200);
         }
+        error_log("here");
         $orders = Order::all();
         $res = [
             'orders' => $orders
