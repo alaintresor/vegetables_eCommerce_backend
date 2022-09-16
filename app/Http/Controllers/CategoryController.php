@@ -17,7 +17,7 @@ class CategoryController extends Controller
          
           if($data){
             return response()->json([
-                'message' => 'All categories Retrieved successfully',
+                'message' => 'All Categories Retrieved successfully',
                 'data' => $data
             ], 200);
           }

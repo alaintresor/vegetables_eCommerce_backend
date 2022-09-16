@@ -21,9 +21,9 @@ class Blog extends Model
     ];
 
     
-    public function category()
+    public function subcategory()
     {
-        return $this->belongsTo(Categories::class ,'category_id');
+        return $this->belongsTo(Blogsubcategory::class ,'sub_category_id');
     }
 
 }
