@@ -10,11 +10,11 @@ class BlogSubCategoryController extends Controller
     public function index()
     {
         try {
-            $sub = BlogSubCategory::orderBy('id', 'desc')->with('category')->get();
+            $sub = BlogSubCategory::all();
 
             if($sub){
                 return response()->json([
-                    'message' => 'All blogs subcategories Retrieved Succesfully',
+                    'message' => 'All Subcategories RetrievedSuccesfully',
                     'data' => $sub
                 ], 200);
             }
@@ -26,14 +26,14 @@ class BlogSubCategoryController extends Controller
             ]);
 
         }
-        $sub = BlogSubCategory::orderBy('id', 'asc')->get();
+        
     }
 
     public function store(Request $request)
     {
-        //
+        
         $this->validate($request, [
-            'name' => 'required|string|max:255|unique:blogs',
+            'name' => 'required|string|max:255',
             'category_id' => 'required'
            
         ]);
@@ -53,7 +53,7 @@ class BlogSubCategoryController extends Controller
     {
         //
         $this->validate($request, [
-            'name' => 'required|string|max:255|unique:blogs',
+            'name' => 'required|string',
             'category_id' => 'required'
            
         ]);

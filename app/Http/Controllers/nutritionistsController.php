@@ -74,7 +74,7 @@ class nutritionistsController extends Controller
         $data = nutritionists::findOrFail($id);
         $data->delete();
         return response()->json([
-            'message' => 'Order Deleted Successfully',
+            'message' => 'Order deleted Successfully',
             'data' => $data
         ], 200);
     }

@@ -9,16 +9,12 @@ use Illuminate\Http\Request;
 
 class orderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
         if (auth()->user()->role != 'admin') {
-            $orders = Order::where('userId', auth()->user()->id)->get();
+            $orders = auth()->user()->orders;
             $res = [
                 'orders' => $orders
             ];
